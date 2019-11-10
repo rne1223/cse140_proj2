@@ -39,7 +39,7 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 ###########
 # Rules
 ##########
-.PHONY: clean remove debug run 
+.PHONY: clean remove debug run
 
 clean:
 	@$(rm) $(OBJECTS)
@@ -56,3 +56,6 @@ run:
 	@echo 
 	 $(BINDIR)/$(TARGET)
 
+run:
+	@echo 
+	 $(BINDIR)/$(TARGET)
