@@ -4,11 +4,11 @@ TARGET   = tips
 
 CC       = /usr/bin/gcc
 # compiling flags here
-CFLAGS   = -g -Wall -std=c99 `pkg-config --cflags gtk+-2.0`
+CFLAGS   = -g -Wall -std=c99 `pkg-config --cflags gtk+-2.0` -DLINUX
 
 LINKER   = /usr/bin/gcc
 # linking flags here
-LFLAGS   = -g -Wall -std=c99 `pkg-config --libs gtk+-2.0` 
+LFLAGS   = -g -Wall -std=c99 `pkg-config --libs gtk+-2.0` -DLINUX
 
 # change these to proper directories where each file should be
 SRCDIR   = src
