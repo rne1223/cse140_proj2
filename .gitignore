@@ -1,6 +1,10 @@
 # Prerequisites
 *.d
 
+#ignore bin dir and obj dir
+bin/
+obj/
+
 # Object files
 *.o
 *.ko
