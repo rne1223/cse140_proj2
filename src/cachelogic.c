@@ -174,10 +174,10 @@ void accessMemory(address addr, word* data, WriteEnable we)
   {
     
     // code to color things
-    highlight_block(0, 0);
-    highlight_block(1, 0);
-    highlight_offset(0, 0, 0, HIT);
-    highlight_offset(0, 1, 0, MISS);
+    // highlight_block(0, 0);
+    // highlight_block(1, 0);
+    // highlight_offset(0, 0, 0, HIT);
+    // highlight_offset(0, 1, 0, MISS);
 
     // code to change the cache
     cache[0].block[0].valid = VALID;
@@ -189,5 +189,6 @@ void accessMemory(address addr, word* data, WriteEnable we)
     cache[0].block[0].data[0]= 16;
 
   }
+
     accessDRAM(addr, (byte*)data, WORD_SIZE, we);
 }

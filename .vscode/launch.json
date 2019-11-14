@@ -10,7 +10,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/bin/tips",
             "preLaunchTask": "compile",
-            "args": [],
+            "args": ["${workspaceFolder}/src/test1.dump"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
