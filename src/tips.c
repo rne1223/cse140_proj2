@@ -1,6 +1,7 @@
 #include "tips.h"
 #include "util.h"
 #include <netinet/in.h>
+#include <math.h>
 
 char* program_name;
 CacheView view;
@@ -38,6 +39,29 @@ void validate_cache_parameters(int set_count_value, int assoc_value, int block_s
     block_size = 0;
 }
 
+<<<<<<< HEAD
+=======
+/* Help load cache configuration through cmd */
+void load_cache_defaults() 
+{
+  char buffer[200];
+  assoc = 2;
+  set_count = 4;
+  block_size = 16;
+  policy = LRU;
+  memory_sync_policy = WRITE_BACK;
+
+  sprintf(buffer, "Cache default values:\n + set count = %d\n + associativity = %d\n + block size = %d\n + replacement policy = %s\n + memory sync policy = %s\n",
+          set_count,
+          assoc,
+          block_size,
+          (policy == RANDOM ? "Random" : (policy == LRU ? "LRU" : "LFU")),
+          (memory_sync_policy == WRITE_BACK ? "Write Back" : "Write Through"));
+
+  append_log(buffer);
+}
+
+>>>>>>> 3c36826... Added logic to modify and highligh the first cache block
 int load_dumpfile(const char* filename)
 {
   char buffer[200];

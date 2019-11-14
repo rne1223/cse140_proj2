@@ -4,7 +4,7 @@
 #ignore bin dir and obj dir
 bin/
 obj/
-
+info/
 # Object files
 *.o
 *.ko

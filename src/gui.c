@@ -1597,7 +1597,12 @@ int build_gui(int argc, char** argv)
   /* Load file if any */
   if(argc >= 2)
     load_dumpfile(argv[argc - 1]);
+<<<<<<< HEAD
 
+=======
+    load_cache_defaults();
+  }
+>>>>>>> 3c36826... Added logic to modify and highligh the first cache block
   gtk_main();
     
   return 0;

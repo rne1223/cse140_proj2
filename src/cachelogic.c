@@ -1,5 +1,14 @@
 #include "tips.h"
 
+#define MASK_5              0x1f // Take the first fi
+#define MASK_6              0x3f
+#define MASK_16             0xffff
+#define MASK_26             0x3ffffff
+#define MASK_UPPER          0xffff0000
+#define INSTRS_START        0x00400000
+#define OFFSET_MASK         block_size-1
+#define INDEX_MASK          set_count-1
+
 /* The following two functions are defined in util.c */
 
 /* finds the highest 1 bit, and returns its position, else 0xFFFFFFFF */
@@ -87,8 +96,47 @@ void accessMemory(address addr, word* data, WriteEnable we)
     accessDRAM(addr, (byte*)data, WORD_SIZE, we);
     return;
   }
+  // Get bits to mask
+  int offset_bits  = uint_log2(block_size);
+  int set_bits= uint_log2(set_count);
+  int tag_bits = offset_bits + set_bits;
 
-  /*
+  // Get the values from addresss by applying masks 
+  int offset = addr & OFFSET_MASK;
+  int set    = (addr >> set_bits) & INDEX_MASK;
+  int tag    = addr >> tag_bits;
+
+  // Get cacheBlock from array 
+  cacheBlock *temp = &cache[set].block[offset];
+  
+  if(we == READ)
+  {
+    /** 
+     * Match the tags
+     * If the are the same then the data in in the cache
+     * If they are different then update the cache and pull the data from memory
+     */
+    // If it doesn't then fill
+    if(temp->tag != tag) 
+    {
+      temp->tag = tag;
+      temp->lru.value = policy;
+      temp->valid = VALID;
+      // Get Data from Memory and fill the whole row
+      accessDRAM(addr, temp->data, WORD_SIZE, we);
+      accessDRAM(addr+4, temp->data+4, WORD_SIZE, we);
+      accessDRAM(addr+8, temp->data+8, WORD_SIZE, we);
+      accessDRAM(addr+12, temp->data+12, WORD_SIZE, we);
+      highlight_block(set,0); // How to get assoc number
+      highlight_offset(set, 0, offset, MISS);
+    }
+  }
+  else
+  {
+    /* code */
+  }
+  
+   /*
   You need to read/write between memory (via the accessDRAM() function) and
   the cache (via the cache[] global structure defined in tips.h)
 
@@ -115,13 +163,31 @@ void accessMemory(address addr, word* data, WriteEnable we)
   functions can be found in tips.h
   */
 
-  /* Start adding code here */
-
-
+  // Check if the data is in cache
   /* This call to accessDRAM occurs when you modify any of the
      cache parameters. It is provided as a stop gap solution.
      At some point, ONCE YOU HAVE MORE OF YOUR CACHELOGIC IN PLACE,
      THIS LINE SHOULD BE REMOVED.
   */
-  accessDRAM(addr, (byte*)data, WORD_SIZE, we);
+  /** Code to mess around with and see how things work **/
+  if (addr == 0)
+  {
+    
+    // code to color things
+    highlight_block(0, 0);
+    highlight_block(1, 0);
+    highlight_offset(0, 0, 0, HIT);
+    highlight_offset(0, 1, 0, MISS);
+
+    // code to change the cache
+    cache[0].block[0].valid = VALID;
+    cache[0].block[0].dirty = VALID;
+    cache[0].block[0].lru.data = VALID;
+    cache[0].block[0].lru.value = VALID;
+    cache[0].block[0].tag = 255;
+    cache[0].block[0].data[1]= 255;
+    cache[0].block[0].data[0]= 16;
+
+  }
+    accessDRAM(addr, (byte*)data, WORD_SIZE, we);
 }
