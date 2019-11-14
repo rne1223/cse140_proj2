@@ -39,8 +39,6 @@ void validate_cache_parameters(int set_count_value, int assoc_value, int block_s
     block_size = 0;
 }
 
-<<<<<<< HEAD
-=======
 /* Help load cache configuration through cmd */
 void load_cache_defaults() 
 {
@@ -61,7 +59,6 @@ void load_cache_defaults()
   append_log(buffer);
 }
 
->>>>>>> 3c36826... Added logic to modify and highligh the first cache block
 int load_dumpfile(const char* filename)
 {
   char buffer[200];

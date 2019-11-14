@@ -172,10 +172,7 @@ void highlight_offset(unsigned int set_num, unsigned int assoc_num, unsigned int
 
 /* Defined in tips.c */
 int load_dumpfile(const char* filename);
-<<<<<<< HEAD
-=======
 void load_cache_defaults();
->>>>>>> 3c36826... Added logic to modify and highligh the first cache block
 void reverse_endianness(instruction* word);
 
 /* Defined in memory.c */
